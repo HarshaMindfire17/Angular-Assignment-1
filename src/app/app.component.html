@@ -1,0 +1,277 @@
+  
+<div class="container"  *ngIf="!submitted">
+  <div class="text-center">
+    <h1>Employee Profile Form</h1>
+  </div>
+    <div class="second col-xs-10 col-md-9 col-xs-offset-1 col-md-offset-2">
+      <form class="form" (ngSubmit)="onSubmit()" #f="ngForm" >
+        <div id="user-data" ngModelGroup="userData" #userData="ngModelGroup">
+          
+        <div class="row col-xs-12">
+          <div class="form-group">
+            <label for="username">Username <span class="help-block">*</span></label>
+            <div class="col-xs-12 col-md-6 iblock">
+              <input type="text" id="fname" class="form-control "
+              ngModel name="fname" fname #fname="ngModel" placeholder="First name" required>
+            </div>
+            <div class="gap"></div>
+            <div class="col-xs-12 col-md-5 iblock">
+              <input type="text" id="lname" class="form-control "
+              ngModel name="lname" lname #lname="ngModel" placeholder="Last name" required>
+            </div>
+          </div>
+          <span class="help-block" *ngIf="(!fname.valid && fname.touched)||(!lname.valid && lname.touched)">Please enter your name!</span>
+        </div>
+        
+        <div class="row col-md-12">
+          <div class="form-group">
+            <label for="email">Email <span class="help-block">*</span></label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              ngModel
+              name="email"
+              email
+              required
+              #email="ngModel">
+            <span class="help-block" *ngIf="email.invalid && email.touched">Please enter a valid email!</span>
+          </div>
+        </div>
+      
+        <div class="row col-md-12">
+          <div class="form-group">
+            <label for="dob">Date of Birth <span class="help-block">*</span></label>
+            <input type="date" id="dob" name="dob" ngModel dob #dob="ngModel" class="form-control"
+                min="1950-01-01" max="2021-03-20" required>
+          </div>
+          <span class="help-block" *ngIf="dob.invalid && dob.touched">Please enter your Date of Birth</span>
+        </div>
+
+        <div class="row col-md-12">
+          <div class="form-group imgDiv">
+            <label for="url">Profile photo <span class="help-block">*</span></label>
+            <div><img [src]="url" width=120px height=150px *ngIf="url"></div>
+            <div>
+              <input type="file" (change)="selectFile($event)" ngModel name="url" required accept="image/*">
+              <div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row col-md-12">
+          <label for="gender">Gender</label>
+          <div class="radio offset-md-1 col-md-2" *ngFor="let gender of genders">
+            <label class="setRadio">
+              <input
+                type="radio"
+                name="gender"
+                ngModel
+                [value]="gender">
+              {{ gender }}
+            </label>
+          </div>
+        </div>
+          
+        <div class="row col-md-12">
+            <div class="form-group">
+              <label for="pan">PAN Number</label>
+              <input
+                type="text"
+                id="pan"
+                class="form-control"
+                ngModel
+                name="pan">
+            </div>
+          </div>
+          <div class="row col-md-12">
+            <div class="form-group">
+              <label for="aadhar">Aadhar Number <span class="help-block">*</span></label>
+              <input
+                type="number"
+                id="aadhar"
+                class="form-control"
+                ngModel
+                #aadhar="ngModel"
+                pattern="[0-9]{12}"
+                required
+                name="aadhar">
+            </div>
+            <span class="help-block" *ngIf="aadhar.invalid && aadhar.touched">Please enter a valid Aadhar number!</span>
+          </div>
+          <div class="row col-md-12">
+            <div class="form-group">
+              <label for="phone">Mobile Number <span class="help-block">*</span></label>
+              <input 
+                type="text" 
+                placeholder="+91 XXXXXXXXXX" 
+                class="form-control" 
+                id="phone" 
+                name="phone"
+                ngModel
+                #phone="ngModel"
+                required
+                pattern="(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}"
+              >
+            </div>
+            <span class="help-block" *ngIf="phone.invalid && phone.touched">Please enter a valid phone number!</span>
+          </div>
+          <div class="row col-md-12"><!--</div> *ngIf="!email.valid && email.touched">-->
+            <div class="form-group">
+              <label for="altph">Alt. Mobile Number</label>
+              <input 
+                type="text" 
+                placeholder="+91 XXXXXXXXXX" 
+                class="form-control" 
+                id="altph" 
+                ngModel
+                #altph="ngModel"
+                name="altph" 
+                pattern="(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}"
+              >
+            </div>
+            <span class="help-block" *ngIf="altph.invalid && altph.touched">Please enter a valid phone number!</span>
+          </div>
+          <div class="row col-md-12">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input
+                type="text"
+                id="city"
+                class="form-control"
+                ngModel
+                name="city"
+              >
+            </div>
+          </div>
+          <div class="row col-md-12">
+            <div class="form-group">
+              <label for="address">Current Address <span class="help-block">*</span></label>
+              <textarea
+                id="address"
+                name="address"
+                rows=2
+                class="form-control"
+                ngModel
+                #address="ngModel"
+                required></textarea>
+            </div>
+            <span class="help-block" *ngIf="address.invalid && address.touched">Please enter an address!</span>
+            <div *ngIf="address.touched" class="copied">
+              <input id="copy" name="copy" type="checkbox" [(ngModel)]="copy" (change)="copyAddress(copy)"><label for="copy"> This is permanant address.</label>
+            </div>
+          </div>
+          <div class="row col-md-12">
+            <div class="form-group">
+              <label for="address2">Permanant Address</label>
+              <textarea
+                id="address2"
+                name="address2"
+                rows=2
+                class="form-control"
+                [(ngModel)]="address2"
+                ></textarea>
+            </div>
+          </div>
+          <div class="row col-md-12">
+            <div class="form-group">
+              <label for="state">State <span class="help-block">*</span></label>
+              <select
+                id="state"
+                class="form-control"
+                ([ngModel])="defaultState"
+                ngModel
+                name="state"
+                required
+                state
+                #state="ngModel">
+                <option value="">--Select one--</option>
+                <option *ngFor="let item of states" [ngValue]="item">
+                  {{item}}
+                </option>
+              </select>
+            </div>
+            <span class="help-block" *ngIf="country.valid && state.invalid && state.touched">Please select a state!</span>
+          </div>
+          <div class="row col-md-12">
+            <div class="form-group">
+              <label for="country">Country <span class="help-block">*</span></label>
+              <select
+                id="country"
+                class="form-control"
+                [ngModel]="defaultCountry"
+                (change)=(openStates())
+                required
+                name="country"
+                #country="ngModel"
+              >
+                <option value="">--Select one--</option><option value="India">India</option>
+                <option value="USA">U.S.A</option><option value="UK">U.K</option>
+                <option value="Japan">Japan</option><option value="France">France</option><option value="Russia">Russia</option>
+              </select>
+            </div>
+            <span class="help-block" *ngIf="country.invalid && country.touched">Please select a country!</span>
+          </div>
+          <div class="row col-md-12">
+            <div class="form-group">
+              <label for="pin">Pincode</label>
+              <input
+                type="number"
+                id="pin"
+                class="form-control"
+                ngModel
+                pattern="[0-9]{6}"
+                #pin="ngModel"
+                name="pin">
+            </div>
+            <span class="help-block" *ngIf="pin.invalid && pin.touched">Please enter a valid pincode!</span>
+          </div>
+          <div class="row col-xs-12">
+            <div class="form-group">
+              <label for="captcha">Enter captcha</label>
+                <span for ="cCode" class="bg-dark text-white col-md-5" id="captcha" [(ngModel)]="captcha" [innerHTML]="captcha"
+                style="padding: 5px;border-radius: 5px; text-align: center; display: inline-block"></span>
+                 <div class="gap"></div>
+                  <span class=" col-md-5" style="display: inline-block;">
+                <input
+                type="number"
+                id="cCode"
+                class="form-control"
+                [(ngModel)]="cCode"
+                name="cCode">
+                </span><mat-icon style="cursor:pointer;" (click)="callCaptcha()">refresh</mat-icon>
+              </div>
+            <span class="help-block" *ngIf="cCode.touched && !capC">Please re-enter captcha!</span>
+          </div>
+        </div>
+   
+        <button
+          class="btn btn-primary"
+          type="submit"
+          
+        >Submit
+        </button>
+      </form>
+    </div>
+  <!--
+  <div class="row" *ngIf="submitted">
+    <div class="col-xs-12">
+      <h3>Your Data</h3>
+      <p>Employee photo:<img [src]="url" width=120px height=150px *ngIf="url"></p>
+      <p>Username: {{ user.fname+user.lname }}</p>
+      <p>Date of Birth: {{ user.dob }}</p>
+      <p>Mail: {{ user.email }}</p>
+      <p>Gender: {{ user.gender }}</p>
+      <p>PAN Number: {{ user.pan }}</p>
+      <p>Aadhar Number: {{ user.aadhar }}</p>
+      <p>Mobile Number: {{ user.phone}}</p>
+      <p>Alternate Mobile Number: {{ user.altph}}</p>
+      <p>City: {{ user.city}}</p>
+      <p>Address: {{ user.address}}</p>
+      <p>State:{{user.state}}</p>
+      <p>Country:{{user.country}}</p>
+      <p>Pincode: {{ user.pin}}</p> 
+    </div>
+  </div>-->
+</div>
+<app-display *ngIf="submitted" [user]="user" [url]="url"></app-display>
+
